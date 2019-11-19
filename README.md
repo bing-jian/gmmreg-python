@@ -1,5 +1,8 @@
 # gmmreg-python
-Python implementation of "Robust Point Set Registration Using Gaussian Mixture Models" by Jian &amp; Vemuri, PAMI'11
+Python implementation of "Robust Point Set Registration Using Gaussian Mixture Models" by Jian &amp; Vemuri, PAMI'11.
+
+Please note that we have another [github repo](https://github.com/bing-jian/gmmreg) that contains C++ implementation and 
+more info about this point set registration work.
 
 Run the following steps to download, install and demo the library:
   ```Shell
