@@ -1,10 +1,16 @@
 # gmmreg-python
 Python implementation of "Robust Point Set Registration Using Gaussian Mixture Models" by Jian &amp; Vemuri, PAMI'11.
 
-Please note that we have another [github repo](https://github.com/bing-jian/gmmreg) that contains C++ implementation and 
-more info about this point set registration work.
+<p align="center"> 
+<img src="images/fish_partial_matching.png"> 
+</p>
 
-Run the following steps to download, install and demo the library:
+
+Please note that we have another [github repo](https://github.com/bing-jian/gmmreg) that contains C++ implementation and 
+more info about this work.
+
+
+Run the following steps to download, install and test the gmmreg python package:
   ```Shell
   git clone https://github.com/bing-jian/gmmreg-python.git
   cd gmmreg-python/src
@@ -12,6 +18,8 @@ Run the following steps to download, install and demo the library:
   cd ../data
   python ../demo.py ./fish_partial.ini
   ```
+
+
 ### Citing
 
 When using this code in a scientific publication, please cite 
