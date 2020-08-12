@@ -1,4 +1,5 @@
 #include <math.h>
+#include <string.h>
 
 /* PLEASE READ THIS HEADER, IMPORTANT INFORMATION INSIDE */
 #include "memory_layout_note.h"

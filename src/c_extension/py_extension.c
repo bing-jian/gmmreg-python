@@ -30,7 +30,7 @@ static PyObject *py_squared_distance_matrix(PyObject *self, PyObject *args) {
   double scale, result;
   PyObject *list;
   */
-  int out_dim[2];
+  npy_intp out_dim[2];
   /* send Python arrays to C */
   if (!PyArg_ParseTuple(args, "OOO", &A, &B, &g)) {
     return NULL;
@@ -76,7 +76,7 @@ static PyObject *py_squared_distance_matrix(PyObject *self, PyObject *args) {
   array_dist = PyArray_SimpleNewFromData(2, out_dim, NPY_DOUBLE, dist);
 
   if (array_dist == NULL) {
-    printf("creating %dx%d array failed\n", out_dim[0], out_dim[1]);
+    printf("creating %ldx%ld array failed\n", out_dim[0], out_dim[1]);
     return NULL;
   }
   /*free(dist);*/
