@@ -12,9 +12,17 @@ __declspec(dllexport)
                                  double* dist) {
   int i, c, r, p, k;
   double *temp, *dist_ij;
+<<<<<<< HEAD
   temp = (double*)malloc(d * sizeof(double));
   dist_ij = (double*)malloc(d * sizeof(double));
 
+=======
+
+  temp = (double*)malloc(d * sizeof(double));
+  /* memset(temp,0,d*sizeof(double)); */
+  dist_ij = (double*)malloc(d * sizeof(double));
+
+>>>>>>> origin/master
   for (i = 0, r = 0; r < m; ++r) {
     for (c = 0; c < n; ++c, ++i) {
       for (p = 0; p < d; ++p) {
