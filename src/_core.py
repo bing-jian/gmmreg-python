@@ -16,7 +16,7 @@ def normalize(x):
     x = x - centroid
     scale = norm(x,'fro')/sqrt(x.shape[0])
     x = x/scale
-    return x,centroid,scale
+    return x, centroid, scale
 
 
 def denormalize(x,centroid,scale):
@@ -32,8 +32,8 @@ def L2_distance(model, scene, scale):
     f1, g1 = gauss_transform(model, model, scale)
     f2, g2 = gauss_transform(model, scene, scale)
     f =  f1 - 2*f2
-    g = 2*array(g1) - 2*array(g2)
-    return f,g
+    g = 2*g1 - 2*g2
+    return f, g
 
 
 def correlation(model, scene, scale):
@@ -52,7 +52,7 @@ def correlation(model, scene, scale):
     #squared correlation
     f = -f2*f2/f1
     g = 2*array(g1)*f2*f2/(f1*f1) - 2*array(g2)*f2/f1
-    return f,g
+    return f, g
 
 
 def init_param(n, d, opt_affine=True):
@@ -95,7 +95,7 @@ def compute_GRBF(ctrl_pts, landmarks, sigma):
     K = K.reshape(len(ctrl_pts),len(ctrl_pts))
     U = array([kernel_func(norm(x-y), sigma) for x in landmarks for y in ctrl_pts])
     U = U.reshape(len(landmarks),len(ctrl_pts))
-    return K,U
+    return K, U
 
 
 def compute_TPS_K(ctrl_pts, landmarks = None, _lambda = 0):
@@ -127,7 +127,7 @@ def compute_TPS_K(ctrl_pts, landmarks = None, _lambda = 0):
         U = array(U).reshape(m,n)
     else:
         U = None
-    return K,U
+    return K, U
 
 def prepare_TPS_basis(landmarks,ctrl_pts):
     """
@@ -140,9 +140,9 @@ def prepare_TPS_basis(landmarks,ctrl_pts):
     Pn = c_[ones((n,1)),ctrl_pts]
     u,s,vh = svd(Pn)
     PP = u[:,d+1:]
-    TPS_basis = c_[Pm,dot(U,PP)]
-    TPS_kernel = dot(PP.T,dot(K,PP))
-    return TPS_basis,TPS_kernel
+    TPS_basis = c_[Pm, dot(U, PP)]
+    TPS_kernel = dot(PP.T, dot(K, PP))
+    return TPS_basis, TPS_kernel
 
 
 def obj_TPS(dist_func, param, basis, kernel, scene, scale, _lambda): #, init_affine=None):
@@ -169,12 +169,12 @@ def obj_L2_TPS(param, basis, kernel, scene, scale, _lambda):
     d = scene.shape[1]
     affine_param = param[0:d*(d+1)].reshape(d+1,d)
     tps_param = param[d*(d+1):d*n].reshape(n-d-1,d)
-    after_tps = dot(basis,r_[affine_param,tps_param])
-    bending = trace(dot(tps_param.T,dot(kernel,tps_param)))
+    after_tps = dot(basis, r_[affine_param,tps_param])
+    bending = trace(dot(tps_param.T, dot(kernel,tps_param)))
     distance, grad = L2_distance(after_tps, scene, scale)
     energy = distance + _lambda * bending
     grad = dot(basis.T, grad)
-    grad[d+1:n] += 2*_lambda*dot(kernel,tps_param)
+    grad[d+1:n] += 2*_lambda*dot(kernel, tps_param)
     grad = grad.reshape(d*n)
     return energy, grad
 
