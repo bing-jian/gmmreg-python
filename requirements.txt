@@ -1,0 +1,5 @@
+configobj
+matplotlib
+numpy
+scipy
+six

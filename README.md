@@ -9,7 +9,9 @@ more info about this work.
 Run the following steps to download, install and test the gmmreg python package:
   ```Shell
   git clone https://github.com/bing-jian/gmmreg-python.git
-  cd gmmreg-python/src
+  cd gmmreg-python
+  pip install -r requirements.txt
+  cd src
   python setup.py install --user
   cd ../data
   python ../demo.py ./fish_partial.ini
