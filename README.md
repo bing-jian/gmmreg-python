@@ -1,4 +1,6 @@
 # gmmreg-python
+[![Tests](https://github.com/bing-jian/gmmreg-python/actions/workflows/tests.yml/badge.svg)](https://github.com/bing-jian/gmmreg-python/actions/workflows/tests.yml)
+
 Python implementation of "Robust Point Set Registration Using Gaussian Mixture Models" by Jian &amp; Vemuri, PAMI'11.
 
 
@@ -26,7 +28,7 @@ The C extension has a pytest suite under `tests/`. It requires the `gmmreg` pack
 importable, so install it (an editable install avoids reinstalling after every change):
   ```Shell
   pip install -r requirements-dev.txt
-  cd src && pip install --no-build-isolation -e . && cd ..
+  pip install -e ./src
   pytest
   ```
 

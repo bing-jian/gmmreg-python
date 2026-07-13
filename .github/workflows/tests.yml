@@ -26,7 +26,7 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: Build and install the C extension
-        run: pip install --no-build-isolation -e ./src
+        run: pip install -e ./src
 
       - name: Run tests
         run: pytest
