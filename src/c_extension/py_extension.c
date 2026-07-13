@@ -37,6 +37,16 @@ static PyObject *py_squared_distance_matrix(PyObject *self, PyObject *args) {
   arrayg =
       (PyArrayObject *)PyArray_ContiguousFromObject(g, NPY_DOUBLE, 1, 2);
 
+  if (arrayA == NULL || arrayB == NULL || arrayg == NULL) {
+    /* PyArray_ContiguousFromObject() already set an exception (e.g. wrong
+     * number of dimensions or non-numeric input); propagate it instead of
+     * dereferencing a NULL PyArrayObject below. */
+    Py_XDECREF(arrayA);
+    Py_XDECREF(arrayB);
+    Py_XDECREF(arrayg);
+    return NULL;
+  }
+
   if (PyArray_NDIM(arrayA) > 2 || PyArray_TYPE(arrayA) != NPY_DOUBLE) {
     PyErr_SetString(PyExc_ValueError,
                     "array must be two-dimensional and of type float");
@@ -94,6 +104,14 @@ static PyObject *py_gauss_transform(PyObject *self, PyObject *args) {
       (PyArrayObject *)PyArray_ContiguousFromObject(A, NPY_DOUBLE, 1, 2);
   arrayB =
       (PyArrayObject *)PyArray_ContiguousFromObject(B, NPY_DOUBLE, 1, 2);
+
+  if (arrayA == NULL || arrayB == NULL) {
+    /* PyArray_ContiguousFromObject() already set an exception; propagate it
+     * instead of dereferencing a NULL PyArrayObject below. */
+    Py_XDECREF(arrayA);
+    Py_XDECREF(arrayB);
+    return NULL;
+  }
 
   if (PyArray_NDIM(arrayA) > 2 || PyArray_TYPE(arrayA) != NPY_DOUBLE) {
     PyErr_SetString(PyExc_ValueError,

@@ -21,6 +21,14 @@ If the gmmreg package was successfully installed, the last command should give a
 <img src="images/fish_partial_matching.png" width=640> 
 </p>
 
+### Running tests
+The C extension has a pytest suite under `tests/`. It requires the `gmmreg` package to be
+importable, so install it (an editable install avoids reinstalling after every change):
+  ```Shell
+  pip install -r requirements-dev.txt
+  cd src && pip install --no-build-isolation -e . && cd ..
+  pytest
+  ```
 
 ### Citing
 
