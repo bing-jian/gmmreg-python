@@ -2,7 +2,7 @@
 #coding=utf-8
 
 import time
-from six.moves import configparser
+import configparser
 import numpy as np
 
 from ._core import *

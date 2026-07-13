@@ -3,7 +3,7 @@
 
 import time
 import subprocess
-from six.moves import configparser
+import configparser
 
 from numpy import loadtxt
 

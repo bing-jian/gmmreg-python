@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-from pylab import *
-from configobj import ConfigObj
+import configparser
+import numpy as np
 import matplotlib.pyplot as plt
 
 
@@ -18,6 +18,7 @@ def display2Dpointset(A):
     for i,x in enumerate(A):
         ax.annotate('%d'%(i+1), xy = x, xytext = x + 0)
     ax.set_axis_off()
+    plt.show()
     #fig.show()
 
 
@@ -67,11 +68,11 @@ def displayABC(A,B,C):
 
 
 def display_pts(f_config):
-    config = ConfigObj(f_config)
-    file_section = config['FILES']
-    mf = file_section['model']
-    sf = file_section['scene']
-    tf = file_section['transformed_model']
+    config = configparser.ConfigParser()
+    config.read(f_config)
+    mf = config.get('FILES', 'model')
+    sf = config.get('FILES', 'scene')
+    tf = config.get('FILES', 'transformed_model')
     m = np.loadtxt(mf)
     s = np.loadtxt(sf)
     t = np.loadtxt(tf)

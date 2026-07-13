@@ -13,10 +13,8 @@ References:
 #define IS_PY3K
 #endif
 
+#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
 #include "numpy/arrayobject.h"
-
-#define IND2(a, i, j) \
-  *((double *)(a->data + i * a->strides[0] + j * a->strides[1]))
 
 #include "cvgmi_API.h"
 
@@ -33,28 +31,29 @@ static PyObject *py_squared_distance_matrix(PyObject *self, PyObject *args) {
   }
 
   arrayA =
-      (PyArrayObject *)PyArray_ContiguousFromObject(A, PyArray_DOUBLE, 1, 2);
+      (PyArrayObject *)PyArray_ContiguousFromObject(A, NPY_DOUBLE, 1, 2);
   arrayB =
-      (PyArrayObject *)PyArray_ContiguousFromObject(B, PyArray_DOUBLE, 1, 2);
+      (PyArrayObject *)PyArray_ContiguousFromObject(B, NPY_DOUBLE, 1, 2);
   arrayg =
-      (PyArrayObject *)PyArray_ContiguousFromObject(g, PyArray_DOUBLE, 1, 2);
+      (PyArrayObject *)PyArray_ContiguousFromObject(g, NPY_DOUBLE, 1, 2);
 
-  if (arrayA->nd > 2 || arrayA->descr->type_num != PyArray_DOUBLE) {
+  if (PyArray_NDIM(arrayA) > 2 || PyArray_TYPE(arrayA) != NPY_DOUBLE) {
     PyErr_SetString(PyExc_ValueError,
                     "array must be two-dimensional and of type float");
     return NULL;
   }
 
-  m = (arrayA->dimensions)[0];
-  n = (arrayB->dimensions)[0];
-  if (arrayA->nd > 1) {
-    d = (arrayA->dimensions)[1];
+  m = PyArray_DIM(arrayA, 0);
+  n = PyArray_DIM(arrayB, 0);
+  if (PyArray_NDIM(arrayA) > 1) {
+    d = PyArray_DIM(arrayA, 1);
   } else {
     d = 1;
   }
-  dist = (double *)malloc(m * n * sizeof(double));
-  squared_distance_matrix((double *)(arrayA->data), (double *)(arrayB->data),
-                          (double *)(arrayg->data), m, n, d, dist);
+  dist = (double *)calloc(m * n, sizeof(double));
+  squared_distance_matrix((double *)PyArray_DATA(arrayA),
+                          (double *)PyArray_DATA(arrayB),
+                          (double *)PyArray_DATA(arrayg), m, n, d, dist);
   out_dim[0] = m;
   out_dim[1] = n;
 
@@ -66,12 +65,11 @@ static PyObject *py_squared_distance_matrix(PyObject *self, PyObject *args) {
    * https://stackoverflow.com/questions/52731884/pyarray-simplenewfromdata
   */
   array_dist = (PyArrayObject*) PyArray_SimpleNewFromData(2, out_dim, NPY_DOUBLE, dist);
-  PyArray_ENABLEFLAGS((PyArrayObject*) array_dist, NPY_ARRAY_OWNDATA);
-
   if (array_dist == NULL) {
     printf("creating %ldx%ld array failed\n", out_dim[0], out_dim[1]);
     return NULL;
   }
+  PyArray_ENABLEFLAGS(array_dist, NPY_ARRAY_OWNDATA);
 
   Py_DECREF(arrayA);
   Py_DECREF(arrayB);
@@ -93,37 +91,37 @@ static PyObject *py_gauss_transform(PyObject *self, PyObject *args) {
   }
 
   arrayA =
-      (PyArrayObject *)PyArray_ContiguousFromObject(A, PyArray_DOUBLE, 1, 2);
+      (PyArrayObject *)PyArray_ContiguousFromObject(A, NPY_DOUBLE, 1, 2);
   arrayB =
-      (PyArrayObject *)PyArray_ContiguousFromObject(B, PyArray_DOUBLE, 1, 2);
+      (PyArrayObject *)PyArray_ContiguousFromObject(B, NPY_DOUBLE, 1, 2);
 
-  if (arrayA->nd > 2 || arrayA->descr->type_num != PyArray_DOUBLE) {
+  if (PyArray_NDIM(arrayA) > 2 || PyArray_TYPE(arrayA) != NPY_DOUBLE) {
     PyErr_SetString(PyExc_ValueError,
                     "array must be two-dimensional and of type float");
     return NULL;
   }
 
-  m = (arrayA->dimensions)[0];
-  n = (arrayB->dimensions)[0];
-  if (arrayA->nd > 1) {
-    dim = (arrayA->dimensions)[1];
+  m = PyArray_DIM(arrayA, 0);
+  n = PyArray_DIM(arrayB, 0);
+  if (PyArray_NDIM(arrayA) > 1) {
+    dim = PyArray_DIM(arrayA, 1);
   } else {
     dim = 1;
   }
   grad = (double *)malloc(m * dim * sizeof(double));
-  result = GaussTransform((double *)(arrayA->data), (double *)(arrayB->data), m,
+  result = GaussTransform((double *)PyArray_DATA(arrayA),
+                          (double *)PyArray_DATA(arrayB), m,
                           n, dim, scale, grad);
 
   /* https://stackoverflow.com/questions/52731884/pyarray-simplenewfromdata */
   arrayGrad =
-      (PyArrayObject*) PyArray_SimpleNewFromData(2, arrayA->dimensions, NPY_DOUBLE, grad);
-  PyArray_ENABLEFLAGS((PyArrayObject*) arrayGrad, NPY_ARRAY_OWNDATA);
-
+      (PyArrayObject*) PyArray_SimpleNewFromData(2, PyArray_DIMS(arrayA), NPY_DOUBLE, grad);
   if (arrayGrad == NULL) {
-    printf("creating %ldx%ld array failed\n", arrayA->dimensions[0],
-           arrayA->dimensions[1]);
+    printf("creating %ldx%ld array failed\n", PyArray_DIM(arrayA, 0),
+           PyArray_DIM(arrayA, 1));
     return NULL;
   }
+  PyArray_ENABLEFLAGS(arrayGrad, NPY_ARRAY_OWNDATA);
 
   Py_DECREF(arrayA);
   Py_DECREF(arrayB);

@@ -7,7 +7,7 @@ python setup.py install --skip-build
 """
 
 from os.path import join
-from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import numpy
 
 module_pycvgmi = Extension('gmmreg._extension',
