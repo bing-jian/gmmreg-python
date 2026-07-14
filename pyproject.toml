@@ -15,3 +15,8 @@ ignore = ["E501"]
 # setup.py is a build script, not code exercised by importing/running the
 # package, so it's not meaningful to hold it to a coverage bar.
 omit = ["*/setup.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "if __name__ == .__main__.:",
+]

@@ -7,12 +7,12 @@ import subprocess
 
 from numpy import loadtxt
 
-import gmmreg
-
-import plotting
+from ._run_config import run_config
+from ._config import read_sections
+from . import plotting
 
 def test(f_config, display=True):
-    model, scene, after_tps = gmmreg.run_config(f_config)
+    model, scene, after_tps = run_config(f_config)
     if display:
         plotting.displayABC(model, scene, after_tps)
 
@@ -27,12 +27,19 @@ def run_executable(gmmreg_exe, f_config, method, display=True):
 
 
 def display_pts(f_config):
-    files = gmmreg.read_sections(f_config)['FILES']
+    files = read_sections(f_config)['FILES']
     m = loadtxt(files['model'])
     s = loadtxt(files['scene'])
     t = loadtxt(files['transformed_model'])
     plotting.displayABC(m,s,t)
 
 
-if __name__ == '__main__':
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: gmmreg-demo <config.ini|config.yaml>", file=sys.stderr)
+        sys.exit(1)
     test(sys.argv[1])
+
+
+if __name__ == '__main__':
+    main()

@@ -4,7 +4,7 @@ running the multi-level TPS registration.
 
 test_config.py already covers read_sections()/as_list() in isolation, and
 test_core.py covers run_multi_level() in isolation; this ties the two
-together the way a real invocation (e.g. `demo.py some_config.ini`) does, and
+together the way a real invocation (e.g. `gmmreg-demo some_config.ini`) does, and
 locks in that .ini and .yaml configs describing the same problem produce the
 same result.
 """

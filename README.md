@@ -17,8 +17,11 @@ Run the following steps to download, install and test the gmmreg python package:
   cd src
   python setup.py install --user
   cd ../data
-  python ../demo.py ./fish_partial.ini
+  gmmreg-demo ./fish_partial.ini
   ```
+Installing the package also installs the `gmmreg-demo` command (backed by `gmmreg.demo:main`),
+so no `cd`/relative-path gymnastics are needed to run it from anywhere once installed.
+
 If the gmmreg package was successfully installed, the last command should give a point set matching result like the image below:
 <p align="center"> 
 <img src="images/fish_partial_matching.png" width=640> 
@@ -29,7 +32,7 @@ Configs can be written as either a classic `.ini` file or a `.yaml`/`.yml` file 
 same `FILES`/`GMMREG_OPT` sections; the format is picked automatically from the file
 extension. `data/fish_partial.yaml` is the YAML equivalent of `data/fish_partial.ini`:
   ```Shell
-  python ../demo.py ./fish_partial.yaml
+  gmmreg-demo ./fish_partial.yaml
   ```
 
 ### Running tests

@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-import gmmreg
+from ._config import read_sections
 
 
 def display2Dpointset(A):
@@ -68,7 +68,7 @@ def displayABC(A,B,C):
 
 
 def display_pts(f_config):
-    files = gmmreg.read_sections(f_config)['FILES']
+    files = read_sections(f_config)['FILES']
     m = np.loadtxt(files['model'])
     s = np.loadtxt(files['scene'])
     t = np.loadtxt(files['transformed_model'])

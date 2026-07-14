@@ -4,7 +4,7 @@
 # YAML equivalent of fish_partial.ini. See that file for a description of
 # every option supported by the external C++ gmmreg_demo executable; this
 # file only lists the subset of FILES/GMMREG_OPT fields used by the Python
-# package (gmmreg.run_config / demo.py / plotting.py).
+# package (gmmreg.run_config / gmmreg.demo / gmmreg.plotting).
 #
 # List-valued options (sigma, lambda, max_function_evals) are written as
 # native YAML lists rather than the whitespace-separated strings used in

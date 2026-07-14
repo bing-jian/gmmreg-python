@@ -30,4 +30,15 @@ setup (name='gmmreg',
               ''',
        package_dir={'gmmreg': ''},
        packages=['gmmreg'],
-       ext_modules=[module_pycvgmi])
+       ext_modules=[module_pycvgmi],
+       install_requires=[
+           'matplotlib>=3.4',
+           'numpy>=1.21',
+           'pyyaml>=5.4',
+           'scipy>=1.7',
+       ],
+       entry_points={
+           'console_scripts': [
+               'gmmreg-demo=gmmreg.demo:main',
+           ],
+       })
