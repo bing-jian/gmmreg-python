@@ -17,9 +17,8 @@ def test(f_config, display=True):
 
 
 def run_executable(gmmreg_exe, f_config, method, display=True):
-    cmd = '%s %s %s'%(gmmreg_exe, f_config, method)
     t1 = time.time()
-    subprocess.call(cmd, shell=True)
+    subprocess.call([gmmreg_exe, f_config, method])
     t2 = time.time()
     print("Elasped time: {} seconds".format(t2 - t1))
     if display:
