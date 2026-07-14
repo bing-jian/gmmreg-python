@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #coding=utf-8
 
+import sys
 import time
 import subprocess
 
@@ -33,6 +34,5 @@ def display_pts(f_config):
     plotting.displayABC(m,s,t)
 
 
-import sys
 if __name__ == '__main__':
     test(sys.argv[1])

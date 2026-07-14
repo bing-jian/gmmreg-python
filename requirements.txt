@@ -1,4 +1,4 @@
-matplotlib
-numpy
-pyyaml
-scipy
+matplotlib>=3.4
+numpy>=1.21
+pyyaml>=5.4
+scipy>=1.7

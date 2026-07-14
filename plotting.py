@@ -3,6 +3,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 import gmmreg
 
@@ -47,8 +48,6 @@ def display3Dpointsets(A,B,ax):
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
 
-
-from mpl_toolkits.mplot3d import Axes3D
 
 def displayABC(A,B,C):
     fig = plt.figure()

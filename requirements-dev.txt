@@ -1,4 +1,5 @@
 -r requirements.txt
-pytest
-setuptools
+pytest>=7.0
+ruff>=0.4
+setuptools>=64
 wheel

@@ -1,0 +1,12 @@
+[tool.ruff]
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# _core.py re-exports the C extension's functions and _run_config.py
+# re-exports all of _core.py's; both are intentional star imports.
+"src/_core.py" = ["F403", "F405"]
+"src/_run_config.py" = ["F403", "F405"]

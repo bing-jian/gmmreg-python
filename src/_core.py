@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-from math import cos,sin,log,exp,sqrt
-from numpy import arange,array,dot,delete,reshape,kron,eye,ones,zeros,trace,s_,r_,c_,squeeze
-from numpy.linalg import svd,qr,norm
-from scipy.optimize import fmin_bfgs, fmin_l_bfgs_b
+from math import log,exp,sqrt
+from numpy import arange,array,dot,ones,trace,r_,c_
+from numpy.linalg import svd,norm
+from scipy.optimize import fmin_l_bfgs_b
 from ._extension import *
 
 
