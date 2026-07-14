@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-import configparser
 import numpy as np
 import matplotlib.pyplot as plt
+
+import gmmreg
 
 
 def display2Dpointset(A):
@@ -68,12 +69,8 @@ def displayABC(A,B,C):
 
 
 def display_pts(f_config):
-    config = configparser.ConfigParser()
-    config.read(f_config)
-    mf = config.get('FILES', 'model')
-    sf = config.get('FILES', 'scene')
-    tf = config.get('FILES', 'transformed_model')
-    m = np.loadtxt(mf)
-    s = np.loadtxt(sf)
-    t = np.loadtxt(tf)
+    files = gmmreg.read_sections(f_config)['FILES']
+    m = np.loadtxt(files['model'])
+    s = np.loadtxt(files['scene'])
+    t = np.loadtxt(files['transformed_model'])
     displayABC(m,s,t)

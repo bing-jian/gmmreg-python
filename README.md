@@ -23,6 +23,14 @@ If the gmmreg package was successfully installed, the last command should give a
 <img src="images/fish_partial_matching.png" width=640> 
 </p>
 
+### Config files
+Configs can be written as either a classic `.ini` file or a `.yaml`/`.yml` file with the
+same `FILES`/`GMMREG_OPT` sections; the format is picked automatically from the file
+extension. `data/fish_partial.yaml` is the YAML equivalent of `data/fish_partial.ini`:
+  ```Shell
+  python ../demo.py ./fish_partial.yaml
+  ```
+
 ### Running tests
 The C extension has a pytest suite under `tests/`. It requires the `gmmreg` package to be
 importable, so install it (an editable install avoids reinstalling after every change):

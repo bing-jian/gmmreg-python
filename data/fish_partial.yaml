@@ -1,0 +1,43 @@
+#=========================================================================
+# An Example of the Configuration YAML File
+#=========================================================================
+# YAML equivalent of fish_partial.ini. See that file for a description of
+# every option supported by the external C++ gmmreg_demo executable; this
+# file only lists the subset of FILES/GMMREG_OPT fields used by the Python
+# package (gmmreg.run_config / demo.py / plotting.py).
+#
+# List-valued options (sigma, lambda, max_function_evals) are written as
+# native YAML lists rather than the whitespace-separated strings used in
+# the .ini format.
+#=========================================================================
+
+FILES:
+  # The alignment is done by moving the 'model' towards the fixed 'scene'.
+  # Usually the point set with less points is chosen as the 'model'.
+  model: ./fish_data/fish_X_nohead.txt
+  scene: ./fish_data/fish_Y_notail.txt
+
+  # 'ctrl_pts' serve as the control points for the thin plate spline (TPS)
+  # nonrigid registration. If not provided, 'model' is used as ctrl_pts.
+  ctrl_pts: ./fish_data/fish_ctrl_pts.txt
+
+  # The final transformed model is saved here.
+  transformed_model: ./transformed_model.txt
+
+GMMREG_OPT:
+  # if the 'normalize' flag is nonzero, normalization is done before the
+  # registration
+  normalize: 1
+
+  # multiscale option, this number should be no more than the number of
+  # parameters given in the options below
+  level: 4
+
+  # the scale parameters of Gaussian mixtures, from coarse to fine
+  sigma: [0.3, 0.2, 0.1, 0.05]
+
+  # weights of the regularization term, e.g. the TPS bending energy
+  lambda: [0.1, 0.02, 0.01, 0.02, 0, 0, 0]
+
+  # the max number of function evaluations at each level
+  max_function_evals: [100, 200, 300, 400]

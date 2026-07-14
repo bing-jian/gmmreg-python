@@ -3,7 +3,6 @@
 
 import time
 import subprocess
-import configparser
 
 from numpy import loadtxt
 
@@ -28,16 +27,10 @@ def run_executable(gmmreg_exe, f_config, method, display=True):
 
 
 def display_pts(f_config):
-    c = configparser.ConfigParser()
-    c.read(f_config)
-    section_common = 'FILES'
-    mf = c.get(section_common, 'model')
-    sf = c.get(section_common, 'scene')
-    tf = c.get(section_common, 'transformed_model')
-
-    m = loadtxt(mf)
-    s = loadtxt(sf)
-    t = loadtxt(tf)
+    files = gmmreg.read_sections(f_config)['FILES']
+    m = loadtxt(files['model'])
+    s = loadtxt(files['scene'])
+    t = loadtxt(files['transformed_model'])
     plotting.displayABC(m,s,t)
 
 

@@ -2,36 +2,28 @@
 #coding=utf-8
 
 import time
-import configparser
 import numpy as np
 
+from ._config import read_sections, as_list
 from ._core import *
 
 def run_config(f_config):
-    section_common = 'FILES'
-    section_option = 'GMMREG_OPT'
+    sections = read_sections(f_config)
+    files = sections['FILES']
+    opt = sections['GMMREG_OPT']
 
-    c = configparser.ConfigParser()
-    c.read(f_config)
-    model_file = c.get(section_common, 'model')
-    scene_file = c.get(section_common, 'scene')
-    model = np.loadtxt(model_file)
-    scene = np.loadtxt(scene_file)
+    model = np.loadtxt(files['model'])
+    scene = np.loadtxt(files['scene'])
     try:
-        ctrl_pts_file = c.get(section_common, 'ctrl_pts')
-        ctrl_pts = np.loadtxt(ctrl_pts_file)
-    except:
+        ctrl_pts = np.loadtxt(files['ctrl_pts'])
+    except (KeyError, OSError, ValueError):
         ctrl_pts = model
-    level = int(c.get(section_option, 'level'))
-    option_str = c.get(section_option, 'sigma')
-    scales = [float(s) for s in option_str.split(' ')]
-    option_str = c.get(section_option, 'lambda')
-    lambdas = [float(s) for s in option_str.split(' ')]
+    level = int(opt['level'])
+    scales = as_list(opt['sigma'], float)
+    lambdas = as_list(opt['lambda'], float)
+    iters = as_list(opt['max_function_evals'], int)
 
-    option_str = c.get(section_option, 'max_function_evals')
-    iters = [int(s) for s in option_str.split(' ')]
-
-    normalize_flag = int(c.get(section_option, 'normalize'))
+    normalize_flag = int(opt['normalize'])
     if normalize_flag==1:
         [model, c_m, s_m] = normalize(model)
         [scene, c_s, s_s] = normalize(scene)
