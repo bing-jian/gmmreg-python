@@ -10,3 +10,8 @@ ignore = ["E501"]
 # re-exports all of _core.py's; both are intentional star imports.
 "src/_core.py" = ["F403", "F405"]
 "src/_run_config.py" = ["F403", "F405"]
+
+[tool.coverage.run]
+# setup.py is a build script, not code exercised by importing/running the
+# package, so it's not meaningful to hold it to a coverage bar.
+omit = ["*/setup.py"]

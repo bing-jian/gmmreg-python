@@ -87,6 +87,12 @@ class TestTPSBasis:
         after = core.transform_points(x0, basis)
         np.testing.assert_allclose(after, ctrl_pts, atol=1e-8)
 
+    def test_init_param_without_affine_is_tps_block_only(self, dim):
+        n = 8
+        x0 = core.init_param(n, dim, opt_affine=False)
+        assert x0.shape == (dim * n - dim * (dim + 1),)
+        np.testing.assert_allclose(x0, 0.0)
+
     def test_basis_and_kernel_shapes(self, dim):
         n, m = 8, 5
         ctrl_pts = random_points(n, dim, seed=8)

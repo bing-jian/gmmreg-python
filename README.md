@@ -1,5 +1,6 @@
 # gmmreg-python
 [![Tests](https://github.com/bing-jian/gmmreg-python/actions/workflows/tests.yml/badge.svg)](https://github.com/bing-jian/gmmreg-python/actions/workflows/tests.yml)
+[![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/bing-jian/gmmreg-python/blob/master/pytest.ini)
 
 Python implementation of "Robust Point Set Registration Using Gaussian Mixture Models" by Jian &amp; Vemuri, PAMI'11.
 
@@ -38,6 +39,15 @@ importable, so install it (an editable install avoids reinstalling after every c
   pip install -r requirements-dev.txt
   pip install -e ./src
   pytest
+  ```
+`pytest` runs with coverage enabled by default (see `pytest.ini`) and fails if coverage
+of the `gmmreg` package drops below 100%.
+
+### Linting
+CI also runs [ruff](https://docs.astral.sh/ruff/) (config in `pyproject.toml`):
+  ```Shell
+  pip install -r requirements-dev.txt
+  ruff check .
   ```
 
 ### Citing
